@@ -6,10 +6,11 @@ interface AuthWrapperInterface {
 }
 export const AuthWrapper: React.FC<AuthWrapperInterface> = ({children}) => {
 
-    const isAuth: boolean = true
+    // const isAuth: boolean = true
 
     return (
-        <div> 
-        </div>
+        <>
+            {children}
+        </>
     );
 };
