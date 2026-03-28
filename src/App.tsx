@@ -15,32 +15,41 @@ import { Layout } from './components/Layout';
 import { FeedPage } from './pages/FeedPage';
 import { NoPage } from './pages/NoPage';
 
+import '@mantine/core/styles.css';
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  /** Put your mantine theme override here */
+  // defaultRadius: 0
+});
 
 function App() {
-    return (
-      <div> 
+  return (
+    <div>
       <Provider store={store}>
-        <CommonWrapper>
-          <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <Routes>
-              <Route path='/' element={<LandingPage />} />
-              <Route path='/login' element={<SignInPage />} />
-              <Route path='/register' element={<SignUpPage />} />
+        <MantineProvider theme={theme}>
+          <CommonWrapper>
+            <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <Routes>
+                <Route path='/' element={<LandingPage />} />
+                <Route path='/login' element={<SignInPage />} />
+                <Route path='/register' element={<SignUpPage />} />
 
-              <Route element={<AuthWrapper children />}>
-                <Route path='/feed' element={<Layout />}>
-                  <Route index element={<FeedPage />} />
+                <Route element={<AuthWrapper children />}>
+                  <Route path='/feed' element={<Layout />}>
+                    <Route index element={<FeedPage />} />
+                  </Route>
+
                 </Route>
 
-              </Route>
-              
-              <Route path='*' element={<NoPage />} /> 
-            </Routes>
-          </Router>
-        </CommonWrapper>
+                <Route path='*' element={<NoPage />} />
+              </Routes>
+            </Router>
+          </CommonWrapper>
+        </MantineProvider>
       </Provider>
-      </div>
-    )
+    </div>
+  )
 }
 
 export default App;
