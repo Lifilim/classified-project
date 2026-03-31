@@ -1,4 +1,4 @@
-import React from 'react';
+import '../ui/global.css';
 
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -9,13 +9,9 @@ import { Navigate, Link } from 'react-router-dom';
 import { selectIsAuth } from '../stores/slices/UserSlice';
 
 import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/core';
-// import { IMaskInput } from 'react-imask';
 
-// interface SignInPageInterface {
-//     isAuth: boolean;
-// }
+
 export const SignInPage = () => {
-    // const {isAuth} = props
 
     const dispatch = useDispatch();
 
@@ -29,6 +25,7 @@ export const SignInPage = () => {
     const handleLogin = () => {
         dispatch(setAuth(true));
     };
+    // добавить токены, перенести авторизацию в AuthWrapper
 
     const unhandleLogin = () => {
         dispatch(setAuth(false));
@@ -55,11 +52,11 @@ export const SignInPage = () => {
                         onChange={(event) => setPassw(event.currentTarget.value)} 
                     />
                     <Button onClick={handleLogin}
-                        variant="filled" color="rgb(44, 85, 189)">
+                        variant="filled" color="var(--neutral-color)">
                         Войти
                     </Button>
                     <Button onClick={unhandleLogin}
-                        variant="filled" color="rgba(7, 23, 64, 1)">
+                        variant="filled" color="var(--secondary-color)">
                         Выйти
                     </Button>
 
@@ -67,7 +64,7 @@ export const SignInPage = () => {
                         component={Link}
                         to="/register"
                         underline="not-hover"
-                        c="dark"
+                        c="var(--secondary-color)"
                     >
                         Нет аккаунта? тыкай сюды
                     </Anchor>

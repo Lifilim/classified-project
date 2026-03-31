@@ -1,19 +1,16 @@
-import React from 'react';
-
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-// import { setAuth } from '../stores/slices/UserSlice';
+// import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../hooks/UserStoreHook';
 
 import { Navigate, Link } from 'react-router-dom';
 import { selectIsAuth } from '../stores/slices/UserSlice';
 
 import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/core';
-// import { IMaskInput } from 'react-imask';
+
 
 export const SignUpPage = () => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const [phone, setPhone] = useState('');
     const [passw1, setPassw1] = useState('');
@@ -55,7 +52,7 @@ export const SignUpPage = () => {
                         onChange={(event) => setPassw2(event.currentTarget.value)} 
                     />
                     <Button onClick={handleRegister}
-                        variant="filled" color="rgb(44, 85, 189)">
+                        variant="filled" color="var(--secondary-color)">
                         Зарегистрироваться
                     </Button>
 
@@ -63,7 +60,7 @@ export const SignUpPage = () => {
                         component={Link}
                         to="/login"
                         underline="not-hover"
-                        c="dark"
+                        c="var(--secondary-color)"
                         ml="auto"
                     >
                         Есть аккаунт? тыкай сюды

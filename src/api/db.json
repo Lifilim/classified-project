@@ -1,0 +1,45 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "title": "Репетитор \nпо некромантии",
+      "price": 3500,
+      "category": "образование",
+      "description": "Когда не знаешь магию, весь мир кажется физикой",
+      "imageUrl": "/cardsImgs/magic.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Травка, гранаты,\n автоматы",
+      "price": 2000,
+      "category": "на все случаи",
+      "description": "Продаю за дёшево",
+      "imageUrl": "/cardsImgs/goods.png"
+    },
+    {
+      "id": 3,
+      "title": "Выходи за меня",
+      "price": 2500,
+      "category": "услуги",
+      "description": "ИЩУ ТУ САМУЮ, ЧТО ВЫЙДЕТ ЗА МЕНЯ на работу",
+      "imageUrl": "/cardsImgs/marryMe.jpeg"
+    },
+    {
+      "id": 3,
+      "title": "Воздух",
+      "price": 500,
+      "category": "необходимое",
+      "description": "Куплю воздух из Антарктиды в солнечный день",
+      "imageUrl": null
+    },
+    {
+      "id": 3,
+      "title": "Воздух",
+      "price": "+100*500",
+      "category": "необходимое",
+      "description": "Продам воздух из Антарктиды в солнечный день",
+      "imageUrl": null
+    }
+  ]
+}
+

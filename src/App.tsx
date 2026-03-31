@@ -1,6 +1,6 @@
 import './App.css';
+import './ui/global.css';
 
-import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from './stores/store';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -18,10 +18,7 @@ import { NoPage } from './pages/NoPage';
 import '@mantine/core/styles.css';
 import { createTheme, MantineProvider } from '@mantine/core';
 
-const theme = createTheme({
-  /** Put your mantine theme override here */
-  // defaultRadius: 0
-});
+const theme = createTheme({});
 
 function App() {
   return (
