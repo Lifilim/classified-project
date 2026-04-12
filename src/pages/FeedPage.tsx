@@ -2,59 +2,67 @@ import { useEffect, useState } from 'react';
 import { SimpleGrid, Container, Button, Center, Title } from '@mantine/core';
 import axios from 'axios';
 import { ServiceCard } from '../components/ServiceCard';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface ServiceItem {
   id: number | string;
   title: string;
   description: string;
   price: number | string;
-  imageUrl: string; 
+  imageUrl: string;
   category: string;
 }
 
 export const FeedPage = () => {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [error, setError] = useState<string | null>(null);
-  
+
+  const navigate = useNavigate();
+  const gotoLanding = () => {
+    navigate('/');
+  };
+
+
 
   useEffect(() => {
-    axios.get<ServiceItem[]>('http://localhost:5000/services') 
+    axios.get<ServiceItem[]>('http://localhost:5000/services')
       .then(res => {
         setServices(res.data);
       })
       .catch(err => {
         console.error("Ошибка загрузки:", err);
-        setError("Не удалось загрузить услуги");
+        setError("Не удалось загрузить услуги(");
       });
   }, []);
 
   if (error) {
     return (
       <Center h="100vh">
-        <Title order={3} c="red">{error}</Title>
+        <Title order={3} c="var(--accent-color)">{error}</Title>
       </Center>
     );
   }
 
-  
-  // const navigate = useNavigate();
-  //     const gotoFeed = () => {
-  //         navigate('/feed'); 
-  //     };
 
   return (
     <Container size="xl" py="xl">
-      <Title order={2} tt="uppercase" mb="xl" c="var(--secondary-color)">
-        Доступные услуги
-      </Title>
+     <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '24px', alignItems: 'center', marginBottom: '2vh'}}>
+        <Button onClick={gotoLanding} h="100%" size="compact-md"
+                variant="gradient"
+                gradient={{ from: 'var(--secondary-color)', to: 'var(--accent-color)', deg: 90 }} >
+          на главную
+        </Button>
+        <Title order={2} tt="uppercase" c="var(--secondary-color)">
+          Доступные услуги
+        </Title>
+      </div>
 
-      <SimpleGrid 
-        cols={{ base: 1, sm: 2, md: 3 }} 
+      <SimpleGrid
+        cols={{ base: 1, sm: 2, md: 3 }}
         spacing="lg"
       >
         {services.map((item) => (
-          <ServiceCard 
+          <ServiceCard
             key={item.id}
             title={item.title}
             description={item.description}
@@ -64,10 +72,6 @@ export const FeedPage = () => {
           />
         ))}
       </SimpleGrid>
-      {/* <Button onClick={gotoFeed} variant="outline" color="var(--text-color)" size="xl"> 
-                    на главную
-      </Button> */}
     </Container>
-    
   );
 };

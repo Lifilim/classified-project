@@ -32,10 +32,9 @@ export const SignInPage = () => {
     };
 
     return (
-        <div>
-            <Box w="clamp(300px, 80vw, 600px)" mx="auto" mt="xl"> {/* width, marginX, marginY*/}
+        <>
+            <Box w="clamp(300px, 80vw, 600px)" mx="auto" pt="7vh"> {/* width, marginX, marginY*/}
                 <Stack gap="md">
-                    SignInPage
                     <InputBase
                         label="Your phone"
                         // component={IMaskInput}
@@ -70,6 +69,6 @@ export const SignInPage = () => {
                     </Anchor>
                 </Stack>
             </Box>
-        </div>
+        </>
     );
 };

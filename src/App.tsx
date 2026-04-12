@@ -12,6 +12,7 @@ import { LandingPage } from './pages/LandingPage';
 import { SignInPage } from './pages/SignInPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { Layout } from './components/Layout';
+import { AppLayout } from './components/AppLayout';
 import { FeedPage } from './pages/FeedPage';
 import { NoPage } from './pages/NoPage';
 
@@ -27,20 +28,20 @@ function App() {
         <MantineProvider theme={theme}>
           <CommonWrapper>
             <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-              <Routes>
-                <Route path='/' element={<LandingPage />} />
-                <Route path='/login' element={<SignInPage />} />
-                <Route path='/register' element={<SignUpPage />} />
+              <AuthWrapper>
+                <Routes>
+                  <Route element={<AppLayout />}>
+                    <Route path='/' element={<LandingPage />} />
+                    <Route path='/login' element={<SignInPage />} />
+                    <Route path='/register' element={<SignUpPage />} />
 
-                <Route element={<AuthWrapper children />}>
-                  <Route path='/feed' element={<Layout />}>
-                    <Route index element={<FeedPage />} />
+                    <Route path='/feed' element={<Layout />}>
+                      <Route index element={<FeedPage />} />
+                    </Route>
                   </Route>
-
-                </Route>
-
-                <Route path='*' element={<NoPage />} />
-              </Routes>
+                  <Route path='*' element={<NoPage />} />
+                </Routes>
+              </AuthWrapper>
             </Router>
           </CommonWrapper>
         </MantineProvider>
