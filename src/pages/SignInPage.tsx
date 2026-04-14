@@ -2,11 +2,11 @@ import '../ui/global.css';
 
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAuth } from '../stores/slices/UserSlice';
+import { setCredentials, logout, selectIsAuth } from '../stores/slices/UserSlice';
 import { useAppSelector } from '../hooks/UserStoreHook';
 
-import { Navigate, Link } from 'react-router-dom';
-import { selectIsAuth } from '../stores/slices/UserSlice';
+import { Link } from 'react-router-dom';
+import { authApi } from "../api/auth";
 
 import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/core';
 
@@ -14,21 +14,31 @@ import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/c
 export const SignInPage = () => {
 
     const dispatch = useDispatch();
+    // const navigate = useNavigate();
 
     const [phone, setPhone] = useState('');
     const [passw, setPassw] = useState('');
 
     if (useAppSelector(selectIsAuth)) {
-        return <Navigate to="/feed" replace />;
+        // return <Navigate to="/feed" replace />;
+        return <></>; 
     }
 
-    const handleLogin = () => {
-        dispatch(setAuth(true));
+    const handleLogin = async ()  => {
+        // dispatch(setAuth(true));
+        try {
+            const data = await authApi.login(phone, passw);
+            dispatch(setCredentials(data));
+        } catch (error) {
+            console.error("Login failed:", error);
+            alert("Неверный телефон или пароль");
+        }
     };
     // добавить токены, перенести авторизацию в AuthWrapper
 
     const unhandleLogin = () => {
-        dispatch(setAuth(false));
+        // dispatch(setAuth(false));
+        dispatch(logout());
     };
 
     return (

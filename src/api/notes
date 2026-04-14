@@ -1,1 +1,1 @@
-json-server --watch src/api/db.json --port 5000
+json-server --watch src/api/mock.cards.json --port 5000

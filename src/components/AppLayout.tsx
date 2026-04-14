@@ -5,7 +5,7 @@ import { Button, Drawer } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
 import { toggleTheme } from '../stores/slices/SettingsSlice';
 
-import '../ui/AppLayout.css';
+// import '../ui/AppLayout.css';
 
 export const AppLayout = () => {
 
