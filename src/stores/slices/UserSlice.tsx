@@ -1,19 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+// import { User } from "../../types/UserType";
+import { UserState, ActiveUserState } from "../../types/UserStateType";
 
-type User = {
-    id: string;
-    phone: string;
-    name: string;
-    avatar?: string;
-    city?: string;
-    rating: number;
-};
+// type User = {
+//     id: string;
+//     phone: string;
+//     name: string;
+//     avatar?: string;
+//     city?: string;
+//     rating: number;
+// };
 
-type UserState = {
-    token: string | null;
-    user: User | null;
-};
 
 const initialState: UserState = {
     token: localStorage.getItem("token"),
@@ -26,13 +24,13 @@ const userSlice = createSlice({
     reducers: {
         setCredentials: (
             state: UserState,
-            action: PayloadAction<{ token: string; user: User }>,
+            action: PayloadAction<ActiveUserState>,
         ) => {
             state.token = action.payload.token;
             state.user = action.payload.user;
             localStorage.setItem("token", action.payload.token);
         },
-        logout: (state) => {
+        logout: (state : UserState) => {
             state.token = null;
             state.user = null;
             localStorage.removeItem("token");

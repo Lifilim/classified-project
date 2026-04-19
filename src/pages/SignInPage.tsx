@@ -2,11 +2,12 @@ import '../ui/global.css';
 
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { setCredentials, logout, selectIsAuth } from '../stores/slices/UserSlice';
 import { useAppSelector } from '../hooks/UserStoreHook';
 
 import { Link } from 'react-router-dom';
-import { authApi } from "../api/auth";
+import { authApi } from '../api/auth';
 
 import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/core';
 
@@ -14,14 +15,14 @@ import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/c
 export const SignInPage = () => {
 
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const [phone, setPhone] = useState('');
     const [passw, setPassw] = useState('');
 
     if (useAppSelector(selectIsAuth)) {
-        // return <Navigate to="/feed" replace />;
-        return <></>; 
+        navigate("/feed");
+        // return <></>; 
     }
 
     const handleLogin = async ()  => {
