@@ -12,45 +12,32 @@ const apiAuth = axios.create({
 apiAuth.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
-        if (token) 
+        if (token)
             config.headers.Authorization = `Bearer ${token}`;
-        
+
 
         console.log(`[API Request] ${config ? config?.method?.toUpperCase() : 'Some Error'} ${config.url}`, config.data);
         if (config.method === "get")
             config.params = { ...config.params, _t: Date.now() };
         return config;
-    }, 
+    },
     (error) => {
         return Promise.reject(error);
     }
 );
 
-apiAuth.interceptors.request.use(
+apiAuth.interceptors.response.use(
     (response) => {
         return response;
-    }, 
+    },
     async (error) => {
         const originalRequest = error.config;
 
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-
-            // try {
-                // const refreshToken = localStorage.getItem('refreshToken');
-                // const { data } = await axios.post('/api/auth/refresh', { refreshToken });
-
-                // localStorage.setItem('token', data.token);
-
-                // originalRequest.headers.Authorization = `Bearer ${data.token}`;
-                // return apiAuth(originalRequest);
-
-            // } catch (refreshError) {
-                localStorage.clear();
-                window.location.href = '/login';
-                return Promise.reject(error);
-                // return Promise.reject(refreshError);
-            // }
+            localStorage.clear();
+            window.location.href = '/login';
+            return Promise.reject(error);
         }
 
         if (error.response?.status === 403) {
@@ -75,30 +62,36 @@ apiAuth.interceptors.request.use(
 
 
 export const authApi = {
-  async login(phone: string, password: string) : Promise<ActiveUserState> {
-    const { data } = await apiAuth.post("/auth/login", { phone, password });
-    if (data.token) localStorage.setItem('token', data.token);
-    return data;
-  },
-  async register(phone: string, password: string, name?: string) : Promise<ActiveUserState> {
-    const { data } = await apiAuth.post("/auth/register", {
-      phone,
-      password,
-      name,
-    });
-    if (data.token) localStorage.setItem('token', data.token);
-    return data;
-  },
-  async getProfile() {
-    const { data } = await apiAuth.get("/auth/profile");
-    return data;
-  },
-  async updateProfile(fields: {
-    name?: string;
-    avatar?: string;
-    city?: string;
-  }) {
-    const { data } = await apiAuth.patch("/auth/profile", fields);
-    return data;
-  },
+    async login(phone: string, password: string): Promise<ActiveUserState> {
+        const { data } = await apiAuth.post("/auth/login", { phone, password });
+        if (data.token) {
+            localStorage.setItem('token', data.token);
+            console.log('Token saved:', data.token); 
+        }
+        return data;
+    },
+    async register(phone: string, password: string, name?: string): Promise<ActiveUserState> {
+        const { data } = await apiAuth.post("/auth/register", {
+            phone,
+            password,
+            name,
+        });
+        if (data.token) {
+            localStorage.setItem('token', data.token);
+            console.log('Token saved:', data.token); 
+        }
+        return data;
+    },
+    async getProfile() {
+        const { data } = await apiAuth.get("/auth/profile");
+        return data;
+    },
+    async updateProfile(fields: {
+        name?: string;
+        avatar?: string;
+        city?: string;
+    }) {
+        const { data } = await apiAuth.patch("/auth/profile", fields);
+        return data;
+    },
 };

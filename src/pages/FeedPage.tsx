@@ -18,6 +18,7 @@ export const FeedPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  
   const gotoLanding = () => {
     navigate('/');
   };

@@ -11,13 +11,13 @@ import { AuthWrapper } from './wrappers/AuthWrapper';
 import { LandingPage } from './pages/LandingPage';
 import { SignInPage } from './pages/SignInPage';
 import { SignUpPage } from './pages/SignUpPage';
-import { Layout } from './components/Layout';
 import { AppLayout } from './components/AppLayout';
 import { FeedPage } from './pages/FeedPage';
 import { NoPage } from './pages/NoPage';
 
 import '@mantine/core/styles.css';
 import { createTheme, MantineProvider } from '@mantine/core';
+import { ProfilePage } from './pages/ProfilePage';
 
 const theme = createTheme({});
 
@@ -32,12 +32,12 @@ function App() {
                 <Routes>
                   <Route element={<AppLayout />}>
                     <Route path='/' element={<LandingPage />} />
+
                     <Route path='/login' element={<SignInPage />} />
                     <Route path='/register' element={<SignUpPage />} />
 
-                    <Route path='/feed' element={<Layout />}>
-                      <Route index element={<FeedPage />} />
-                    </Route>
+                    <Route path='/feed' element={<FeedPage />}/>
+                    <Route path='/profile' element={<ProfilePage />} />
                   </Route>
                   <Route path='*' element={<NoPage />} />
                 </Routes>

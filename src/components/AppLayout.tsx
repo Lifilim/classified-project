@@ -1,5 +1,6 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+// import React from 'react';
+import { useDispatch, } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Button, Drawer } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
@@ -10,8 +11,13 @@ import { toggleTheme } from '../stores/slices/SettingsSlice';
 export const AppLayout = () => {
 
     const dispatch = useDispatch();
+      const navigate = useNavigate();
+
     const handleLogin = () => {
         dispatch(toggleTheme());
+    };
+    const gotoProfile = () => {
+        return navigate("/profile");
     };
 
     const [opened, { open, close }] = useDisclosure(false);
@@ -43,6 +49,9 @@ export const AppLayout = () => {
                     header: { backgroundColor: 'var(--base-color)' }, 
                     close: { color: 'var(--secondary-color)', },
                 }}>
+                <Button w="90%" variant="transparent" onClick={gotoProfile}>
+                    Профиль
+                </Button>
             </Drawer>
 
             <div style={{ marginTop: '0px' }}>

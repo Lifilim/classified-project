@@ -1,6 +1,6 @@
 import '../ui/global.css';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setCredentials, logout, selectIsAuth } from '../stores/slices/UserSlice';
@@ -20,13 +20,15 @@ export const SignInPage = () => {
     const [phone, setPhone] = useState('');
     const [passw, setPassw] = useState('');
 
-    if (useAppSelector(selectIsAuth)) {
-        navigate("/feed");
-        // return <></>; 
-    }
+    const isAuth = useAppSelector(selectIsAuth);
+    useEffect(() => {
+        if (isAuth) {
+            navigate("/feed");
+        }
+    }, [isAuth, navigate]);
+    
 
     const handleLogin = async ()  => {
-        // dispatch(setAuth(true));
         try {
             const data = await authApi.login(phone, passw);
             dispatch(setCredentials(data));
@@ -35,10 +37,8 @@ export const SignInPage = () => {
             alert("Неверный телефон или пароль");
         }
     };
-    // добавить токены, перенести авторизацию в AuthWrapper
 
     const unhandleLogin = () => {
-        // dispatch(setAuth(false));
         dispatch(logout());
     };
 

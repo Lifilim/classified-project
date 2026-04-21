@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useLocation, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../hooks/UserStoreHook';
 
-import { selectUser, selectToken, setCredentials, logout } from '../stores/slices/UserSlice';
+import { selectUser, setCredentials, logout } from '../stores/slices/UserSlice';
 import { authApi } from '../api/auth';
 
 
@@ -13,39 +13,30 @@ interface AuthWrapperInterface {
 export const AuthWrapper: React.FC<AuthWrapperInterface> = ({ children }) => {
 
     const dispatch = useAppDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const location = useLocation();
 
-    // const isAuth = useAppSelector(selectIsAuth);
     const user = useAppSelector(selectUser);
-    const token = useAppSelector(selectToken); //localStorage.getItem('token');
-
-    const [isInit, setIsInit] = useState(false);
+    const token = localStorage.getItem('token'); //useAppSelector(selectToken);
     
+    // const [isInit, setIsInit] = useState(false);
+    const from = location.state?.from?.pathname || '/'; 
+
     useEffect(() => {
         const restoreSession = async () => {
-            // const publicRoutes = ['/', '/login', '/register'];
-            // const isPublicRoute = publicRoutes.includes(location.pathname);
-            // const from = location.state?.from || '/';
 
-            // if (isPublicRoute) return;
-            if (!token || token === 'undefined' || token === 'null') {
+            if (!token || token === 'undefined' || token === 'null' || !user) {
                 dispatch(logout());
-                setIsInit(true);
-                return;
-                // dispatch(logout());
-                // navigate('/login', { state: { from: location.pathname } });
-                // if (location.pathname === '/login' || location.pathname === '/register') {
-                //     navigate(from);
-                // }
+                // setIsInit(true);
+                return <Navigate to={'/login'} replace />;
             }
-            // if (user) {
+            if (user) {
                 // setIsInit(true);
                 // return;
-                // if (location.pathname === '/login' || location.pathname === '/register')
-                //     navigate(from);
-                // return;
-            // }
+                if (location.pathname === '/login' || location.pathname === '/register')
+                    navigate(from);
+                return;
+            }
             try {
                 const data = await authApi.getProfile();
                 dispatch(setCredentials(data));
@@ -56,18 +47,22 @@ export const AuthWrapper: React.FC<AuthWrapperInterface> = ({ children }) => {
                 dispatch(logout());
                 // navigate('/login', { state: { from: location.pathname } });
             } finally {
-                setIsInit(true);
+                // setIsInit(true);
             }
         };
         restoreSession();
-    }, [dispatch, token]);
+    }, [dispatch, navigate, token, user, from, location.pathname]);
 
-    if (!isInit) return <div>Загрузка...</div>;
+    // if (!isInit) return <div>Загрузка...</div>;
 
     const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
     if (user && isAuthPage) {
-        const from = location.state?.from || '/feed';
+        const from = location.state?.from || '/';
         return <Navigate to={from} replace />;
+    }
+
+    if (!user && !isAuthPage) {
+        return <Navigate to="/login" state={{ from: location.pathname }} replace />;
     }
 
     return (
