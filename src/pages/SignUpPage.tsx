@@ -27,7 +27,7 @@ export const SignUpPage = () => {
     const handleRegister = async () => {
         if (passw1 !== passw2) {
             alert('Пароли не совпадают');
-            return <></>;
+            return;
         }
         try {
             const data = await authApi.register(phone, passw1, "someUserName");
@@ -35,18 +35,18 @@ export const SignUpPage = () => {
             // navigate('/feed');
         } catch (error) {
             // console.error('Registration failed:', error);
-             if (axios.isAxiosError(error)) {
-    console.log('Статус:', error.response?.status);
-    console.log('Тело ошибки:', error.response?.data);
-    console.log('Сообщение:', error.message);
-    
-    const errorMessage = error.response?.data?.message || 'Registration failed';
-  } else if (error instanceof Error) {
-    console.log('Обычная ошибка:', error.message);
-  } else {
-    console.log('Неизвестная ошибка:', error);
-  }
-  throw error;
+            if (axios.isAxiosError(error)) {
+                console.log('Статус:', error.response?.status);
+                console.log('Тело ошибки:', error.response?.data);
+                console.log('Сообщение:', error.message);
+
+                // const errorMessage = error.response?.data?.message || 'Registration failed';
+            } else if (error instanceof Error) {
+                console.log('Обычная ошибка:', error.message);
+            } else {
+                console.log('Неизвестная ошибка:', error);
+            }
+            //throw error;
         }
     };
 
@@ -59,19 +59,19 @@ export const SignUpPage = () => {
                         label="Your phone"
                         placeholder="Your phone"
                         value={phone}
-                        onChange={(event) => setPhone(event.currentTarget.value)} 
+                        onChange={(event) => setPhone(event.currentTarget.value)}
                     />
                     <PasswordInput
                         label="Password"
                         placeholder="Input password"
                         value={passw1}
-                        onChange={(event) => setPassw1(event.currentTarget.value)} 
+                        onChange={(event) => setPassw1(event.currentTarget.value)}
                     />
                     <PasswordInput
                         label="Password again"
                         placeholder="Input password again"
                         value={passw2}
-                        onChange={(event) => setPassw2(event.currentTarget.value)} 
+                        onChange={(event) => setPassw2(event.currentTarget.value)}
                     />
                     <Button onClick={handleRegister}
                         variant="filled" color="var(--secondary-color)">

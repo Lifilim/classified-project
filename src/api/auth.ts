@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 import { ActiveUserState } from "../types/UserStateType";
+import { useDispatch } from 'react-redux';
+import { logout } from '../stores/slices/UserSlice';
 // import { config } from 'process';
 
 const apiAuth = axios.create({
@@ -35,16 +37,18 @@ apiAuth.interceptors.response.use(
 
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-            localStorage.clear();
+            // localStorage.clear();
+            useDispatch()(logout());
             window.location.href = '/login';
             return Promise.reject(error);
         }
-
+        
         if (error.response?.status === 403) {
             console.error('Access denied');
         }
-
+        
         if (error.response?.status === 404) {
+            window.location.href = '/error/404';
             console.error('Resourse not found');
         }
 

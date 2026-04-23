@@ -3,7 +3,7 @@ import '../ui/global.css';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setCredentials, logout, selectIsAuth } from '../stores/slices/UserSlice';
+import { setCredentials, selectIsAuth } from '../stores/slices/UserSlice';
 import { useAppSelector } from '../hooks/UserStoreHook';
 
 import { Link } from 'react-router-dom';
@@ -38,9 +38,9 @@ export const SignInPage = () => {
         }
     };
 
-    const unhandleLogin = () => {
-        dispatch(logout());
-    };
+    // const unhandleLogin = () => {
+    //     dispatch(logout());
+    // };
 
     return (
         <>
@@ -65,10 +65,10 @@ export const SignInPage = () => {
                         variant="filled" color="var(--neutral-color)">
                         Войти
                     </Button>
-                    <Button onClick={unhandleLogin}
+                    {/* <Button onClick={unhandleLogin}
                         variant="filled" color="var(--secondary-color)">
                         Выйти
-                    </Button>
+                    </Button> */}
 
                     <Anchor
                         component={Link}

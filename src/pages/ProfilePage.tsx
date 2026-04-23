@@ -1,12 +1,20 @@
 import '../ui/global.css';
 import { useAppSelector } from '../hooks/UserStoreHook';
 import { selectUser } from '../stores/slices/UserSlice';
-import { Text, Avatar, Card, Box, Flex } from '@mantine/core';
+import { Text, Avatar, Card, Box, Flex, Loader } from '@mantine/core';
 
 export const ProfilePage = () => {
 
     const user = useAppSelector(selectUser);
-    if (!user) throw Error("Login failed:");
+    // if (!user) throw Error("Login failed:");
+     if (!user) {
+        return (
+            <Flex justify="center" align="center" h="100vh">
+                <h6>что-то не так...</h6> <br />
+                <Loader /> {/* Или просто <div>Загрузка...</div> */}
+            </Flex>
+        );
+    }
 
     return (
             <Box w="clamp(300px, 80vw, 600px)" mx="auto" pt="7vh">

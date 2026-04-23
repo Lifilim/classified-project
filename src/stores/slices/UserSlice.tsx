@@ -1,17 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-// import { User } from "../../types/UserType";
 import { UserState, ActiveUserState } from "../../types/UserStateType";
-
-// type User = {
-//     id: string;
-//     phone: string;
-//     name: string;
-//     avatar?: string;
-//     city?: string;
-//     rating: number;
-// };
-
 
 const initialState: UserState = {
     token: localStorage.getItem("token"),
