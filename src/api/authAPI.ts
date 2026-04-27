@@ -4,18 +4,13 @@ import { User } from "../types/UserType";
 import { LoginDTO } from "../types/LoginDTOType";
 import { RegisterDTO } from "../types/RegisterDTOType";
 
-interface authResponse {
-  token: string,
-  user: User,
-}
-
 export const authApi = {
   async login(dto: LoginDTO) : Promise<ActiveUserState> {
-    const { data } = await api.post<authResponse>("/auth/login", dto);
+    const { data } = await api.post<ActiveUserState>("/auth/login", dto);
     return data;
   },
   async register(dto: RegisterDTO) : Promise<ActiveUserState> {
-    const { data } = await api.post<authResponse>("/auth/register", dto);
+    const { data } = await api.post<ActiveUserState>("/auth/register", dto);
     return data;
   },
   async getProfile() {

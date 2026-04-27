@@ -1,40 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { SimpleGrid, Container, Button, Center, Title } from '@mantine/core';
-import axios from 'axios';
 import { ServiceCard } from '../components/ServiceCard';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../hooks/UserStoreHook';
+import { fetchServices, selectServices, selectServicesError, selectServicesLoading } from '../stores/slices/ServicesSlice';
 
-interface ServiceItem {
-  id: number | string;
-  title: string;
-  description: string;
-  price: number | string;
-  imageUrl: string;
-  category: string;
-}
 
 export const FeedPage = () => {
-  const [services, setServices] = useState<ServiceItem[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const services = useAppSelector(selectServices);
+  const loading = useAppSelector(selectServicesLoading);
+  const error = useAppSelector(selectServicesError);
+
+  useEffect(() => {
+    dispatch(fetchServices());
+  }, [dispatch]);
   
   const gotoLanding = () => {
     navigate('/');
   };
 
-
-
-  useEffect(() => {
-    axios.get<ServiceItem[]>('http://localhost:5000/services')
-      .then(res => {
-        setServices(res.data);
-      })
-      .catch(err => {
-        console.error("Ошибка загрузки:", err);
-        setError("Не удалось загрузить услуги(");
-      });
-  }, []);
+    if (loading) {
+    return <Center h="100vh">Loading...</Center>;
+  }
 
   if (error) {
     return (
@@ -63,14 +54,7 @@ export const FeedPage = () => {
         spacing="lg"
       >
         {services.map((item) => (
-          <ServiceCard
-            key={item.id}
-            title={item.title}
-            description={item.description}
-            price={item.price}
-            imageUrl={item.imageUrl}
-            category={item.category}
-          />
+          <ServiceCard key={item.id} {...item} />
         ))}
       </SimpleGrid>
     </Container>

@@ -1,17 +1,21 @@
 import '../ui/global.css';
 import { useAppSelector } from '../hooks/UserStoreHook';
 import { selectUser } from '../stores/slices/UserSlice';
-import { Text, Avatar, Card, Box, Flex, Loader } from '@mantine/core';
+import { selectServices } from '../stores/slices/ServicesSlice';
+import { ServiceCard } from '../components/ServiceCard';
+import { Text, Avatar, Card, Box, Flex } from '@mantine/core';
 
 export const ProfilePage = () => {
 
+    
     const user = useAppSelector(selectUser);
-    // if (!user) throw Error("Login failed:");
-     if (!user) {
+    const services = useAppSelector(selectServices);
+
+    if (!user) {
         return (
             <Flex justify="center" align="center" h="100vh">
                 <h6>что-то не так...</h6> <br />
-                <Loader /> {/* Или просто <div>Загрузка...</div> */}
+                {/* <Loader />  <div>Загрузка...</div> */}
             </Flex>
         );
     }
@@ -42,6 +46,12 @@ export const ProfilePage = () => {
                             <Text ta="left" fz="h3" c="--var(--text-color)">★ {user.rating}</Text>
                             <Text ta="right" fz="xs" c="--var(--text-color)">{user.city}</Text>
                         </Flex>
+                    </Card.Section>
+
+                    <Card.Section inheritPadding pb="xs" withBorder>
+                        {services.map((item) => (
+                                  <ServiceCard key={item.id} {...item} />
+                                ))}
                     </Card.Section>
                 </Card>
             </Box>
