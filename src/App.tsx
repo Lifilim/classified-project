@@ -19,6 +19,7 @@ import { NoPage } from './pages/NoPage';
 import '@mantine/core/styles.css';
 import { createTheme, MantineProvider } from '@mantine/core';
 import { ProfilePage } from './pages/ProfilePage';
+import { EditProfilePage } from './pages/EditProfilePage';
 
 const theme = createTheme({});
 
@@ -39,6 +40,7 @@ function App() {
 
                     <Route path='/feed' element={<FeedPage />}/>
                     <Route path='/profile' element={<ProfilePage />} />
+                    <Route path='/profile/edit' element={<EditProfilePage />} />
                     <Route path="/create" element={<CreateCardPage />} />
                   </Route>
                   <Route path='*' element={<NoPage />} />

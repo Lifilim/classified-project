@@ -25,4 +25,8 @@ export const authApi = {
     const { data } = await api.patch<User>("/auth/profile", fields);
     return data;
   },
+  async deleteProfile() {
+    const res = await api.delete('/auth/profile');
+    return res.data;
+  },
 };

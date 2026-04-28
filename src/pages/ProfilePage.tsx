@@ -2,9 +2,11 @@ import '../ui/global.css';
 import { selectUser } from '../stores/slices/UserSlice';
 import { fetchMyServicesThunk, selectMyServices } from '../stores/slices/ServicesSlice';
 import { ServiceCard } from '../components/ServiceCard';
-import { Text, Avatar, Card, Box, Flex } from '@mantine/core';
+import { Text, Avatar, Card, Box, Flex, Button, ActionIcon } from '@mantine/core';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../stores/storeHook';
+import { IconPencilMinus } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfilePage = () => {
 
@@ -12,11 +14,12 @@ export const ProfilePage = () => {
     const services = useAppSelector(selectMyServices);
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(fetchMyServicesThunk());
     }, [dispatch]);
-    
+
 
     if (!user) {
         return (
@@ -45,6 +48,14 @@ export const ProfilePage = () => {
                             <Text fz="xs" c="--var(--text-color)">{user.createdAt}</Text>
                             <Text fz="xs" c="--var(--text-color)">{user.phone}</Text>
                         </Flex>
+                        <ActionIcon
+                            ml="auto"
+                            variant="subtle"
+                            color="var(--secondary-color)"
+                            onClick={() => navigate('/profile/edit')}
+                        >
+                            <IconPencilMinus />
+                        </ActionIcon>
                     </Flex>
                 </Card.Section>
 
@@ -61,6 +72,6 @@ export const ProfilePage = () => {
                     ))}
                 </Card.Section>
             </Card>
-        </Box>
+        </Box >
     );
 };
