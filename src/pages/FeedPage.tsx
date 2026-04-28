@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { SimpleGrid, Container, Button, Center, Title } from '@mantine/core';
 import { ServiceCard } from '../components/ServiceCard';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../hooks/UserStoreHook';
-import { fetchServices, selectServices, selectServicesError, selectServicesLoading } from '../stores/slices/ServicesSlice';
+import { fetchServicesThunk, selectServices, selectServicesError, selectServicesLoading } from '../stores/slices/ServicesSlice';
+import { useAppDispatch, useAppSelector } from '../stores/storeHook';
 
 
 export const FeedPage = () => {
@@ -16,7 +16,7 @@ export const FeedPage = () => {
   const error = useAppSelector(selectServicesError);
 
   useEffect(() => {
-    dispatch(fetchServices());
+    dispatch(fetchServicesThunk());
   }, [dispatch]);
   
   const gotoLanding = () => {

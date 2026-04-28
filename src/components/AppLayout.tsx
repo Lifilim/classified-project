@@ -6,8 +6,8 @@ import { Button, Drawer } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
 import { toggleTheme } from '../stores/slices/SettingsSlice';
 
-import { logout, selectUser } from '../stores/slices/UserSlice';
-import { useAppSelector } from '../hooks/UserStoreHook';
+import { logout } from '../stores/slices/UserSlice';
+// import { useAppSelector } from '../stores/storeHook';
 // import '../ui/AppLayout.css';
 
 export const AppLayout = () => {
@@ -16,7 +16,7 @@ export const AppLayout = () => {
     const navigate = useNavigate();
 
 
-    const user = useAppSelector(selectUser);
+    // const user = useAppSelector(selectUser);
 
     const handleLogin = () => {
         dispatch(toggleTheme());
@@ -73,6 +73,9 @@ export const AppLayout = () => {
                 </Button>
                 <Button w="90%" variant="transparent" onClick={() => { return navigate("/"); }} c="var(--secondary-color)">
                     Главная
+                </Button>
+                 <Button w="90%" variant="transparent" onClick={() => { return navigate("/create"); }} c="var(--secondary-color)">
+                    Создать карточку
                 </Button>
             </Drawer>
 

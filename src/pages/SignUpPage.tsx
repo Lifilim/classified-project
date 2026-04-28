@@ -1,23 +1,28 @@
 import axios from 'axios';
-import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/UserStoreHook';
+import { useEffect, useState } from 'react';
 import { registerThunk, selectIsAuth } from '../stores/slices/UserSlice';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/core';
+import { useAppDispatch, useAppSelector } from '../stores/storeHook';
 
 
 export const SignUpPage = () => {
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [phone, setPhone] = useState('');
     const [passw1, setPassw1] = useState('');
     const [passw2, setPassw2] = useState('');
 
-    if (useAppSelector(selectIsAuth)) {
-        return <></>;
-    }
+    const isAuth = useAppSelector(selectIsAuth);
+    useEffect(() => {
+        if (isAuth) {
+            navigate("/feed");
+        }
+    }, [isAuth, navigate]);
+    
 
     const handleRegister = async () => {
         if (passw1 !== passw2) {

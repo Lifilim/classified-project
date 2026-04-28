@@ -2,13 +2,12 @@ import '../ui/global.css';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { setCredentials, selectIsAuth, logout } from '../stores/slices/UserSlice';
-import { useAppDispatch, useAppSelector } from '../hooks/UserStoreHook';
+import { useAppDispatch, useAppSelector } from '../stores/storeHook';
 
 import { Link } from 'react-router-dom';
 
 import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/core';
-import { loginThunk, logoutThunk, selectIsAuth } from '../stores/slices/UserSlice';
+import { loginThunk, logout, selectIsAuth } from '../stores/slices/UserSlice';
 
 
 export const SignInPage = () => {
@@ -31,7 +30,7 @@ export const SignInPage = () => {
         try {
             dispatch(loginThunk({phone, password}));
         } catch (error) {
-            dispatch(logoutThunk());
+            dispatch(logout());
             console.error("Login failed:", error);
             alert("Неверный телефон или пароль");
         }

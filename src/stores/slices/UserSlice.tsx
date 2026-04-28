@@ -40,13 +40,13 @@ export const registerThunk = createAsyncThunk(
     }
 );
 
-export const logoutThunk = createAsyncThunk(
-    "auth/logout",
-    async () => {
-        localStorage.removeItem("token");
-        console.log('Token removed');
-    }
-);
+// export const logoutThunk = createAsyncThunk(
+//     "auth/logout",
+//     async () => {
+//         localStorage.removeItem("token");
+//         console.log('Token removed');
+//     }
+// );
 
 
 const userSlice = createSlice({
@@ -103,19 +103,19 @@ const userSlice = createSlice({
                 localStorage.removeItem("token");
             });
 
-        builder
-            .addCase(logoutThunk.fulfilled, (state) => {
-                state.token = null;
-                state.user = null;
-            })
-            .addMatcher(
-                (action) => [loginThunk.rejected, registerThunk.rejected].includes(action.type),
-                (state) => {
-                    state.token = null;
-                    state.user = null;
-                    localStorage.removeItem("token"); //  genius:P
-                }
-            );
+        // builder
+        //     .addCase(logoutThunk.fulfilled, (state) => {
+        //         state.token = null;
+        //         state.user = null;
+        //     })
+        //     .addMatcher(
+        //         (action) => [loginThunk.rejected, registerThunk.rejected].includes(action.type),
+        //         (state) => {
+        //             state.token = null;
+        //             state.user = null;
+        //             localStorage.removeItem("token"); //  genius:P
+        //         }
+        //     );
     },
 });
 

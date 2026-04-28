@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../hooks/UserStoreHook';
-
-import { selectUser, logoutThunk, selectToken, setUser } from '../stores/slices/UserSlice';
+import { selectUser, logout, selectToken, setUser } from '../stores/slices/UserSlice';
 import { authApi } from '../api/authAPI';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../stores/storeHook';
 
 
 interface AuthWrapperInterface {
@@ -35,7 +34,7 @@ interface AuthWrapperInterface {
                     dispatch(setUser(data));
                 } catch (error) {
                     console.log('AuthWrapper: logout: ' + error);
-                    dispatch(logoutThunk());
+                    dispatch(logout());
                 }
             }
         };

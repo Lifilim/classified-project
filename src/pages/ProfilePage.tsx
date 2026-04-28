@@ -1,15 +1,22 @@
 import '../ui/global.css';
-import { useAppSelector } from '../hooks/UserStoreHook';
 import { selectUser } from '../stores/slices/UserSlice';
-import { selectServices } from '../stores/slices/ServicesSlice';
+import { fetchMyServicesThunk, selectMyServices } from '../stores/slices/ServicesSlice';
 import { ServiceCard } from '../components/ServiceCard';
 import { Text, Avatar, Card, Box, Flex } from '@mantine/core';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../stores/storeHook';
 
 export const ProfilePage = () => {
 
-    
     const user = useAppSelector(selectUser);
-    const services = useAppSelector(selectServices);
+    const services = useAppSelector(selectMyServices);
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchMyServicesThunk());
+    }, [dispatch]);
+    
 
     if (!user) {
         return (
@@ -21,39 +28,39 @@ export const ProfilePage = () => {
     }
 
     return (
-            <Box w="clamp(300px, 80vw, 600px)" mx="auto" pt="7vh">
-                <Card withBorder p="lg md lg">
-                    <Card.Section inheritPadding withBorder>
-                        <Flex mb="xs" gap="md" align="center">
-                            <Avatar src={user.avatar} color="--var(--secondary-color)"></Avatar>
-                            <Text
-                                fz="h1"
-                                fw={900}
-                                variant="gradient"
-                                gradient={{ from: 'var(--secondary-color)', to: 'var(--accent-color)', deg: 90 }}
-                            >
-                                {user.name}
-                            </Text>
-                            <Flex direction="column" align="flex-start" justify="flex-start">
-                                <Text fz="xs" c="--var(--text-color)">{user.createdAt}</Text>
-                                <Text fz="xs" c="--var(--text-color)">{user.phone}</Text>
-                            </Flex>
+        <Box w="clamp(300px, 80vw, 600px)" mx="auto" pt="7vh">
+            <Card withBorder p="lg md lg">
+                <Card.Section inheritPadding withBorder>
+                    <Flex mb="xs" gap="md" align="center">
+                        <Avatar src={user.avatar} color="--var(--secondary-color)"></Avatar>
+                        <Text
+                            fz="h1"
+                            fw={900}
+                            variant="gradient"
+                            gradient={{ from: 'var(--secondary-color)', to: 'var(--accent-color)', deg: 90 }}
+                        >
+                            {user.name}
+                        </Text>
+                        <Flex direction="column" align="flex-start" justify="flex-start">
+                            <Text fz="xs" c="--var(--text-color)">{user.createdAt}</Text>
+                            <Text fz="xs" c="--var(--text-color)">{user.phone}</Text>
                         </Flex>
-                    </Card.Section>
+                    </Flex>
+                </Card.Section>
 
-                    <Card.Section inheritPadding pb="xs" withBorder>
-                        <Flex mt="sm" gap="md" align="center" justify="space-between">
-                            <Text ta="left" fz="h3" c="--var(--text-color)">★ {user.rating}</Text>
-                            <Text ta="right" fz="xs" c="--var(--text-color)">{user.city}</Text>
-                        </Flex>
-                    </Card.Section>
+                <Card.Section inheritPadding pb="xs" withBorder>
+                    <Flex mt="sm" gap="md" align="center" justify="space-between">
+                        <Text ta="left" fz="h3" c="--var(--text-color)">★ {user.rating}</Text>
+                        <Text ta="right" fz="xs" c="--var(--text-color)">{user.city}</Text>
+                    </Flex>
+                </Card.Section>
 
-                    <Card.Section inheritPadding pb="xs" withBorder>
-                        {services.map((item) => (
-                                  <ServiceCard key={item.id} {...item} />
-                                ))}
-                    </Card.Section>
-                </Card>
-            </Box>
+                <Card.Section inheritPadding pb="xs" withBorder>
+                    {services.map((item) => (
+                        <ServiceCard key={item.id} {...item} />
+                    ))}
+                </Card.Section>
+            </Card>
+        </Box>
     );
 };

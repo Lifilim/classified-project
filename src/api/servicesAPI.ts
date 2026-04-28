@@ -13,7 +13,7 @@ export const servicesApi = {
   },
 
   getMy: async () => {
-    const res = await api.get<Service>(`/cards/my`);
+    const res = await api.get<Service[]>(`/cards/my`);
     return res.data;
   }
 };

@@ -42,14 +42,15 @@ api.interceptors.response.use(
         
         if (error.response?.status === 404) {
             console.error('Resourse not found');
+            window.location.href = '/*';
         }
 
         if (error.response?.status >= 500) {
-            console.error('Server error. Please try later');
+            console.error('Server error');
         }
 
         if (!error.response) {
-            console.error('Network error. Check your connection');
+            console.error('Unexpected error:' + error);
         }
 
         return Promise.reject(error);
