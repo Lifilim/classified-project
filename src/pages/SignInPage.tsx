@@ -1,24 +1,22 @@
 import '../ui/global.css';
 
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setCredentials, selectIsAuth } from '../stores/slices/UserSlice';
-import { useAppSelector } from '../hooks/UserStoreHook';
+import { useAppDispatch, useAppSelector } from '../stores/storeHook';
 
 import { Link } from 'react-router-dom';
-import { authApi } from '../api/auth';
 
 import { InputBase, PasswordInput, Button, Anchor, Stack, Box } from '@mantine/core';
+import { loginThunk, logout, selectIsAuth } from '../stores/slices/UserSlice';
 
 
 export const SignInPage = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [phone, setPhone] = useState('');
-    const [passw, setPassw] = useState('');
+    const [password, setPassw] = useState('');
 
     const isAuth = useAppSelector(selectIsAuth);
     useEffect(() => {
@@ -30,17 +28,13 @@ export const SignInPage = () => {
 
     const handleLogin = async ()  => {
         try {
-            const data = await authApi.login(phone, passw);
-            dispatch(setCredentials(data));
+            dispatch(loginThunk({phone, password}));
         } catch (error) {
+            dispatch(logout());
             console.error("Login failed:", error);
             alert("Неверный телефон или пароль");
         }
     };
-
-    // const unhandleLogin = () => {
-    //     dispatch(logout());
-    // };
 
     return (
         <>
@@ -58,17 +52,13 @@ export const SignInPage = () => {
                         label="Password"
                         // description="Input description"
                         placeholder="Input password"
-                        value={passw}
+                        value={password}
                         onChange={(event) => setPassw(event.currentTarget.value)} 
                     />
                     <Button onClick={handleLogin}
                         variant="filled" color="var(--neutral-color)">
                         Войти
                     </Button>
-                    {/* <Button onClick={unhandleLogin}
-                        variant="filled" color="var(--secondary-color)">
-                        Выйти
-                    </Button> */}
 
                     <Anchor
                         component={Link}

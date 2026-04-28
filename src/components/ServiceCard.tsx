@@ -1,22 +1,10 @@
 import { Card, Image, Text, Group, Button, Badge, Stack } from '@mantine/core';
+import { Service } from '../types/Service';
 
 import placeholderImg from '../assets/404.png';
 
-interface ServiceCardProps {
-    title: string;
-    price: number | string;
-    description: string;
-    imageUrl?: string;
-    category: string;
-}
 
-export const ServiceCard = ({
-    title,
-    price,
-    description,
-    imageUrl,
-    category
-}: ServiceCardProps) => {
+export const ServiceCard = (props: Service) => {
     return (
         <Card
             shadow="sm"
@@ -28,28 +16,28 @@ export const ServiceCard = ({
         >
             <Card.Section>
                 <Image
-                    src={imageUrl || placeholderImg}
+                    src={props.imageUrl || placeholderImg}
                     height={160}
-                    alt={title}
+                    alt={props.title}
                 />
             </Card.Section>
 
             <Stack mt="md" gap="xs">
                 <Group justify="space-between">
                     <Text fw={700} style={{ whiteSpace: 'pre-line' }} tt="uppercase" c="var(--secondary-color)">
-                        {title}
+                        {props.title}
                     </Text>
                     <Badge color="var(--surface-color)" radius={0} variant="filled">
-                        {category}
+                        {props.category}
                     </Badge>
                 </Group>
 
                 <Text size="sm" c="var(--neutral-color)" lineClamp={2}>
-                    {description}
+                    {props.description}
                 </Text>
 
                 <Text fw={900} size="xl" c="var(--accent-color)">
-                    {price} ₽
+                    {props.price} ₽
                 </Text>
             </Stack>
 

@@ -15,9 +15,5 @@ export const CommonWrapper: React.FC<CommonWrapperInterface> = ({children}) => {
         document.documentElement.setAttribute('data-theme', themeMode);
     }, [themeMode]);
 
-    return (
-        <> 
-            {children}
-        </>
-    );
+    return <>{children}</>; 
 };

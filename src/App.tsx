@@ -13,6 +13,7 @@ import { SignInPage } from './pages/SignInPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { AppLayout } from './components/AppLayout';
 import { FeedPage } from './pages/FeedPage';
+import { CreateCardPage } from './pages/CreateCardPage';
 import { NoPage } from './pages/NoPage';
 
 import '@mantine/core/styles.css';
@@ -38,6 +39,7 @@ function App() {
 
                     <Route path='/feed' element={<FeedPage />}/>
                     <Route path='/profile' element={<ProfilePage />} />
+                    <Route path="/create" element={<CreateCardPage />} />
                   </Route>
                   <Route path='*' element={<NoPage />} />
                 </Routes>
