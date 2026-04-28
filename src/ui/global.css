@@ -1,0 +1,30 @@
+:root[data-theme='light'] {
+    --secondary-color: #28264b;
+    --base-color: #e8eae7;
+    --accent-color: #a40033;
+    --surface-color: #959ec9;
+    --neutral-color: #4e5174;
+
+    --text-color: #fff;
+}
+
+:root[data-theme='dark'] {
+    --secondary-color: #e8eae7;
+    --base-color: #28264b;
+    --accent-color: #a40033;
+    --surface-color: #4e5174;
+    --neutral-color: #959ec9;
+
+    --text-color: #000;
+}
+
+
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+    background-color: var(--base-color) !important;
+}

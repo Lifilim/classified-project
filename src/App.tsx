@@ -1,58 +1,53 @@
-import React from 'react';
 import './App.css';
+import './ui/global.css';
+
 import { Provider } from 'react-redux';
 import { store } from './stores/store';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { CommonWrapper } from './wrappers/CommonWrapper';
 import { AuthWrapper } from './wrappers/AuthWrapper';
-import { LandingPage } from './pages/LandingPage';
-import { LoginPage } from './pages/LoginPage';
-import { RegisterPage } from './pages/RegisterPage';
-import { Layout } from './pages/Layout';
-import { FeedPage } from './pages/FeedPage';
 
+import { LandingPage } from './pages/LandingPage';
+import { SignInPage } from './pages/SignInPage';
+import { SignUpPage } from './pages/SignUpPage';
+import { AppLayout } from './components/AppLayout';
+import { FeedPage } from './pages/FeedPage';
+import { NoPage } from './pages/NoPage';
+
+import '@mantine/core/styles.css';
+import { createTheme, MantineProvider } from '@mantine/core';
+import { ProfilePage } from './pages/ProfilePage';
+
+const theme = createTheme({});
 
 function App() {
-
-    return (
+  return (
+    <div>
       <Provider store={store}>
-        <CommonWrapper>
-          <Router>
-            <AuthWrapper>
-              <Routes>
-                <Route path='/' element={<LandingPage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/register' element={<RegisterPage />} />
+        <MantineProvider theme={theme}>
+          <CommonWrapper>
+            <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <AuthWrapper>
+                <Routes>
+                  <Route element={<AppLayout />}>
+                    <Route path='/' element={<LandingPage />} />
 
-                <Route path='/feed' element={<Layout />}>
-                  <Route index element={<FeedPage />} />
-                </Route>
-              </Routes>
-            </AuthWrapper>
-          </Router>
-        </CommonWrapper>
+                    <Route path='/login' element={<SignInPage />} />
+                    <Route path='/register' element={<SignUpPage />} />
+
+                    <Route path='/feed' element={<FeedPage />}/>
+                    <Route path='/profile' element={<ProfilePage />} />
+                  </Route>
+                  <Route path='*' element={<NoPage />} />
+                </Routes>
+              </AuthWrapper>
+            </Router>
+          </CommonWrapper>
+        </MantineProvider>
       </Provider>
-    )
-
-  // return (
-  //   <div className="App">
-  //     <header className="App-header">
-  //       <img src={logo} className="App-logo" alt="logo" />
-  //       <p>
-  //         Edit <code>src/App.tsx</code> and save to reload.
-  //       </p>
-  //       <a
-  //         className="App-link"
-  //         href="https://reactjs.org"
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //       >
-  //         Learn React
-  //       </a>
-  //     </header>
-  //   </div>
-  // );
+    </div>
+  )
 }
 
 export default App;
