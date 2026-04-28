@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Button, Drawer } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
-import { toggleTheme } from '../stores/slices/SettingsSlice';
+import { selectTheme, toggleTheme } from '../stores/slices/SettingsSlice';
 
 import { logout } from '../stores/slices/UserSlice';
+import { useAppSelector } from '../stores/storeHook';
+import { useEffect } from 'react';
 // import { useAppSelector } from '../stores/storeHook';
 // import '../ui/AppLayout.css';
 
@@ -15,10 +17,9 @@ export const AppLayout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const curTheme = useAppSelector(selectTheme);
 
-    // const user = useAppSelector(selectUser);
-
-    const handleLogin = () => {
+    const handleTheme = () => {
         dispatch(toggleTheme());
     };
     const handleLogout = () => {
@@ -32,13 +33,10 @@ export const AppLayout = () => {
 
     return (
         <>
-            {/* <nav style={{
-                display: "flex", gap: "5vw", alignItems: "center", justifyContent: "space-between", padding: "10px 10px 0 3vw",
-                position: "fixed", left: "0", right: "0", width: "100vw", zIndex: '10'
-            }}> */}
             <Button variant="filled" radius="xl" color='var(--neutral-color)' size='xs'
                 pos="fixed" top="1vh" left="1vw" style={{ zIndex: '10' }}
-                onClick={handleLogin}>
+                onClick={handleTheme} c="var(--surface-color)">
+                    {curTheme === 'light' ? '☀︎' : curTheme === 'dark' ? '★' : '✿'}
             </Button>
             <Button variant="transparent" onClick={open} size="40px" p="0" c="var(--secondary-color)"
                 pos="fixed" top="10px" right="10px" style={{ zIndex: '10' }}>

@@ -49,13 +49,27 @@ export const registerThunk = createAsyncThunk(
 // );
 
 
+export const updateUserThunk = createAsyncThunk(
+    '/auth/profile',
+    async (data: { name: string }) => {
+        return await authApi.updateProfile(data);
+    }
+);
+
+export const deleteUserThunk = createAsyncThunk(
+    'user/delete',
+    async () => {
+        return await authApi.deleteProfile();
+    }
+);
+
 const userSlice = createSlice({
     name: 'user',
     initialState,
     selectors: {
-            selectIsAuth: (state) => state.token !== null,
-            selectToken: (state) => state.token,
-            selectUser: (state) => state.user,
+        selectIsAuth: (state) => state.token !== null,
+        selectToken: (state) => state.token,
+        selectUser: (state) => state.user,
     },
     reducers: {
         setUser: (state, action: PayloadAction<User>) => {
@@ -116,6 +130,20 @@ const userSlice = createSlice({
         //             localStorage.removeItem("token"); //  genius:P
         //         }
         //     );
+
+        builder
+        .addCase(updateUserThunk.fulfilled, (state, action) => {
+            state.user = action.payload;
+        })
+        .addCase(updateUserThunk.pending, () => { })
+        .addCase(updateUserThunk.rejected, () => { });
+        
+        builder.addCase(deleteUserThunk.fulfilled, (state) => {
+            state.user = null;
+            localStorage.removeItem('token');
+        })
+        .addCase(deleteUserThunk.pending, () => { })
+        .addCase(deleteUserThunk.rejected, () => { });
     },
 });
 

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, isFulfilled, isPending, isRejected, isRejectedWithValue, PayloadAction } from '@reduxjs/toolkit';
 
 type SettingsState = {
     theme: string;
@@ -33,7 +33,7 @@ const settingsSlice = createSlice({
         setLanguage: (state, action: PayloadAction<string>) => {
             state.language = action.payload;
         },
-    }
+    },
 });
 
 export const { toggleTheme, setTheme, setLanguage } = settingsSlice.actions;

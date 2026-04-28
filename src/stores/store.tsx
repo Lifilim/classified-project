@@ -1,14 +1,14 @@
 // import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/UserSlice'; 
-import settingsReducer from './slices/SettingsSlice'; 
+import userReducer from './slices/UserSlice';
+import settingsReducer from './slices/SettingsSlice';
 import servicesReducer from './slices/ServicesSlice';
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
         settings: settingsReducer,
-    services: servicesReducer,
+        services: servicesReducer,
     }
 });
 
